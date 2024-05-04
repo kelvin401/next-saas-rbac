@@ -26,7 +26,7 @@ export async function updateMember(app: FastifyInstance) {
             role: roleSchema,
           }),
           response: {
-            2024: z.null(),
+            204: z.null(),
           },
         },
       },
