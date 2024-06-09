@@ -33,6 +33,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
                   unit: z.number(),
                   price: z.number(),
                 }),
+                total: z.number(),
               }),
             }),
           },
