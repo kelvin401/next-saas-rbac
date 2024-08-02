@@ -2,7 +2,6 @@
 
 import { HTTPError } from 'ky'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 import { signInWithPassword } from '@/http/sign-in-with-password'
@@ -49,5 +48,5 @@ export async function SignInWithEmailAndPassword(data: FormData) {
     }
   }
 
-  redirect('/')
+  return { success: true, message: null, errors: null }
 }
