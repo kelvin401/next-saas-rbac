@@ -8,7 +8,7 @@ export default function AppLayout({
   children: React.ReactNode
 }>) {
   if (!isAuthenticated()) {
-    redirect('/auht/sign-in')
+    redirect('/auth/sign-in')
   }
 
   return <>{children}</>
