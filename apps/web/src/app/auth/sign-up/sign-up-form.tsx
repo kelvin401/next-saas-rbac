@@ -18,12 +18,14 @@ import { signUpAction } from './actions'
 
 export default function SignUpForm() {
   const router = useRouter()
+
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
     signUpAction,
     () => {
       router.push('/auth/sign-in')
     },
   )
+
   return (
     <div className="space-y-4">
       <form onSubmit={handleSubmit} className="space-y-4">
