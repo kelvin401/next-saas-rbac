@@ -1,11 +1,13 @@
-import { auth } from '@/http/middlewares/auth'
-import { prisma } from '@/lib/prisma'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+
+import { auth } from '@/http/middlewares/auth'
+import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
-import { UnauthorizedError } from '../_errors/unauthorized-error'
+
 import { BadRequestError } from '../_errors/bad-request-error'
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function getProjects(app: FastifyInstance) {
   app
@@ -38,7 +40,7 @@ export async function getProjects(app: FastifyInstance) {
                     name: z.string().nullable(),
                     avatarUrl: z.string().nullable(),
                   }),
-                })
+                }),
               ),
             }),
           },
@@ -55,7 +57,7 @@ export async function getProjects(app: FastifyInstance) {
 
         if (cannot('get', 'Project')) {
           throw new UnauthorizedError(
-            `You're not allowed to see this organization projects.`
+            `You're not allowed to see this organization projects.`,
           )
         }
 
@@ -90,6 +92,6 @@ export async function getProjects(app: FastifyInstance) {
         }
 
         return reply.send({ projects })
-      }
+      },
     )
 }
