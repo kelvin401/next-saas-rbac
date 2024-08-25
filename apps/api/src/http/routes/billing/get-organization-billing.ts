@@ -1,10 +1,12 @@
-import { auth } from '@/http/middlewares/auth'
-import { getUserPermissions } from '@/utils/get-user-permissions'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { UnauthorizedError } from '../_errors/unauthorized-error'
+
+import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
+import { getUserPermissions } from '@/utils/get-user-permissions'
+
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function getOrganizationBilling(app: FastifyInstance) {
   app
@@ -50,7 +52,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
 
         if (cannot('get', 'Billing')) {
           throw new UnauthorizedError(
-            `You're not allowed to get billing details from this organization.`
+            `You're not allowed to get billing details from this organization.`,
           )
         }
 
@@ -75,17 +77,17 @@ export async function getOrganizationBilling(app: FastifyInstance) {
           billing: {
             seats: {
               amount: amountOfMembers,
-              unit: 10, //10 dollars
+              unit: 10, // 10 dollars
               price: amountOfMembers * 10,
             },
             projects: {
               amount: amountOfProjects,
-              unit: 20, //20 dollars
+              unit: 20, // 20 dollars
               price: amountOfMembers * 20,
             },
             total: amountOfMembers * 10 + amountOfMembers * 20,
           },
         }
-      }
+      },
     )
 }
