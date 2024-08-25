@@ -1,9 +1,11 @@
-import { prisma } from '@/lib/prisma'
+import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+
+import { prisma } from '@/lib/prisma'
+
 import { BadRequestError } from '../_errors/bad-request-error'
-import { roleSchema } from '@saas/auth'
 
 export async function getInvite(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -72,6 +74,6 @@ export async function getInvite(app: FastifyInstance) {
       return reply.status(201).send({
         invite,
       })
-    }
+    },
   )
 }

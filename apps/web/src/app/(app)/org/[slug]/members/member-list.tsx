@@ -25,7 +25,7 @@ export async function MemberList() {
   const permissions = await ability()
   const authOrganization = organizationSchema.parse(organization)
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 py-2">
       <h2 className="text-lg font-semibold">Members</h2>
 
       <div className="rounded border">
