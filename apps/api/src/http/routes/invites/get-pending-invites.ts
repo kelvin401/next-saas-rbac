@@ -1,10 +1,11 @@
-import { prisma } from '@/lib/prisma'
+import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { BadRequestError } from '../_errors/bad-request-error'
+
 import { auth } from '@/http/middlewares/auth'
-import { roleSchema } from '@saas/auth'
+import { BadRequestError } from '@/http/routes/_errors/bad-request-error'
+import { prisma } from '@/lib/prisma'
 
 export async function getPendingInvites(app: FastifyInstance) {
   app
@@ -14,9 +15,8 @@ export async function getPendingInvites(app: FastifyInstance) {
       '/pending-invites',
       {
         schema: {
-          tags: ['Invite'],
-          summary: 'Get all user pending invites.',
-          security: [{ bearerAuth: [] }],
+          tags: ['Invites'],
+          summary: 'Get all user pending invites',
           response: {
             200: z.object({
               invites: z.array(
@@ -35,13 +35,13 @@ export async function getPendingInvites(app: FastifyInstance) {
                       avatarUrl: z.string().url().nullable(),
                     })
                     .nullable(),
-                })
+                }),
               ),
             }),
           },
         },
       },
-      async (request, reply) => {
+      async (request) => {
         const userId = await request.getCurrentUserId()
 
         const user = await prisma.user.findUnique({
@@ -78,11 +78,7 @@ export async function getPendingInvites(app: FastifyInstance) {
           },
         })
 
-        if (!invites) {
-          throw new BadRequestError('Invite not found or expired.')
-        }
-
-        return reply.status(204).send({ invites })
-      }
+        return { invites }
+      },
     )
 }
