@@ -19,7 +19,9 @@ export const env = createEnv({
   },
   runtimeEnv: {
     PORT: process.env.PORT,
-    DATABASE_URL: process.env.DATABASE_URL,
+    DATABASE_URL:
+      process.env.DATABASE_URL ||
+      'postgresql://postgres:postgres@localhost:5432/saas?schema=public',
     JWT_SECRET: process.env.JWT_SECRET,
     GITHUB_OAUTH_CLIENT_ID: process.env.GITHUB_OAUTH_CLIENT_ID,
     GITHUB_OAUTH_CLIENT_SECRET: process.env.GITHUB_OAUTH_CLIENT_SECRET,
